@@ -6,22 +6,22 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/aws-cdk.aws-signer-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/aws-cdk.aws-signer-{{ version }}.tar.gz
   sha256: 9e2d191abd777271382c25b5bfc16390a214a8f0a463c4a17c8b4c0034bcf4f3
 
 build:
   noarch: python
-  script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 1
 
 requirements:
   host:
-    - python >=3.7
+    - python {{ python_min }}
     - setuptools >=67.3.2,<67.4.dev0
     - wheel >=0.40,<1.dev0
     - pip
   run:
-    - python >=3.7
+    - python >={{ python_min }}
     - aws-cdk.core ==1.204.0
     - constructs >=3.3.69,<4.0.0
     - python-jsii >=1.84.0,<2.0.0
@@ -36,6 +36,7 @@ test:
     - pip check
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/aws/aws-cdk
